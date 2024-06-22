@@ -1,7 +1,7 @@
 # from secrets import API_KEY
 # from chess import Board
-from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 from telegram import ReplyKeyboardMarkup
+from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 
 
 class Board:
