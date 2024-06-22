@@ -1,1 +1,1 @@
-python-telegram-bot==13.11
+pytelegrambotapi==4.20.0
