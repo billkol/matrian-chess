@@ -117,7 +117,7 @@ class Chess:  # сами фигуры
 
 class Pawn(Chess):  # пешка
     def look(self):
-        return f'Pn{cl}'
+        return f'Pn{self.color}'
 
     def move(self, al):
         x2, y2 = int(al[0]), int(al[1])
@@ -152,7 +152,7 @@ class Pawn(Chess):  # пешка
 
 class Toat(Chess):  # тоат
     def look(self):
-        return f'Tt{cl}'
+        return f'Tt{self.color}'
 
     def move(self, al):
         x2, y2, x3, y3 = int(al[0]), int(al[1]), int(al[2]), int(al[3])
@@ -191,7 +191,7 @@ class Toat(Chess):  # тоат
 
 class Warrior(Chess):  # воин
     def look(self):
-        return f'Wa{cl}'
+        return f'Wa{self.color}'
 
     def move(self, al):
         x2, y2, x3, y3 = int(al[0]), int(al[1]), int(al[2]), int(al[3])
@@ -225,7 +225,7 @@ class Warrior(Chess):  # воин
 
 class PodDwar(Chess):  # под-двар
     def look(self):
-        return f'Pd{cl}'
+        return f'Pd{self.color}'
 
     def move(self, al):
         x2, y2, x3, y3 = int(al[0]), int(al[1]), int(al[2]), int(al[3])
@@ -255,7 +255,7 @@ class PodDwar(Chess):  # под-двар
 
 class Dwar(Chess):  # двар
     def look(self):
-        return f'Dw{cl}'
+        return f'Dw{self.color}'
 
     def move(self, al):
         x2, y2, x3, y3, x4, y4 = int(al[0]), int(al[1]), int(al[2]), int(al[3]), int(al[4]), int(
@@ -297,7 +297,7 @@ class Dwar(Chess):  # двар
 
 class Pilot(Chess):  # лётчик
     def look(self):
-        return f'Pl{cl}'
+        return f'Pl{self.color}'
 
     def move(self, al):
         x2, y2, x3, y3, x4, y4 = int(al[0]), int(al[1]), int(al[2]), int(al[3]), int(al[4]), int(
@@ -329,7 +329,7 @@ class Pilot(Chess):  # лётчик
 
 class Leader(Chess):  # вождь
     def look(self):
-        return f'Ld{cl}'
+        return f'Ld{self.color}'
 
     def move(self, al):
         x2, y2, x3, y3, x4, y4 = int(al[0]), int(al[1]), int(al[2]), int(al[3]), int(al[4]), int(
@@ -365,7 +365,7 @@ class Leader(Chess):  # вождь
 
 class Princess(Chess):  # принцесса
     def look(self):
-        return f'Pr{cl}'
+        return f'Pr{self.color}'
 
     def move(self, al):
         if len(al) > 2:
