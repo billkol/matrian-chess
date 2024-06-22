@@ -7,27 +7,9 @@ bot = telebot.TeleBot('5316221762:AAFjaEjaQa7Tu6HUuNoaN9cPR7Xd8c1zZ00')
 
 class Game:
     def __init__(self):
-        self.chess_on_board = [[None] * 10 for _ in range(10)]
-        self.chess_on_board[1] = [Toat('Bl', 0, 1), Pawn('Bl', 1, 1), Pawn('Bl', 2, 1),
-                                  Pawn('Bl', 3, 1), Pawn('Bl', 4, 1), Pawn('Bl', 5, 1),
-                                  Pawn('Bl', 6, 1), Pawn('Bl', 7, 1), Pawn('Bl', 8, 1),
-                                  Toat('Bl', 9, 1)]
-
-        self.chess_on_board[0] = [Warrior('Bl', 0, 0), PodDwar('Bl', 1, 0), Dwar('Bl', 2, 0),
-                                  Pilot('Bl', 3, 0), Princess('Bl', 4, 0), Leader('Bl', 5, 0),
-                                  Pilot('Bl', 6, 0), Dwar('Bl', 7, 0), PodDwar('Bl', 8, 0),
-                                  Warrior('Bl', 9, 0)]
-
-        self.chess_on_board[8] = [Toat('Wt', 0, 8), Pawn('Wt', 1, 8), Pawn('Wt', 2, 8),
-                                  Pawn('Wt', 3, 8), Pawn('Wt', 4, 8), Pawn('Wt', 5, 8),
-                                  Pawn('Wt', 6, 8), Pawn('Wt', 7, 8), Pawn('Wt', 8, 8),
-                                  Toat('Wt', 9, 8)]
-
-        self.chess_on_board[9] = [Warrior('Wt', 0, 9), PodDwar('Wt', 1, 9), Dwar('Wt', 2, 9),
-                                  Pilot('Wt', 3, 9), Leader('Wt', 4, 9), Princess('Wt', 5, 9),
-                                  Pilot('Wt', 6, 9), Dwar('Wt', 7, 9), PodDwar('Wt', 8, 9),
-                                  Warrior('Wt', 9, 9)]
+        self.chess_on_board = []
         self.color = 'Wt'
+        self.new_game()
 
     def new_game(self):
         self.chess_on_board = [[None] * 10 for _ in range(10)]
@@ -50,6 +32,7 @@ class Game:
                                   Pilot('Wt', 3, 9), Leader('Wt', 4, 9), Princess('Wt', 5, 9),
                                   Pilot('Wt', 6, 9), Dwar('Wt', 7, 9), PodDwar('Wt', 8, 9),
                                   Warrior('Wt', 9, 9)]
+        self.color = 'Wt'
         self.update()
 
     def draw_pc(self):
@@ -74,12 +57,11 @@ class Game:
 
     def move_figure_helper(self, x_pos, y_pos, al):  # движение фигур по доске
         try:
-            x, y = int(x_pos), int(y_pos)
             fl = False
-            if self.chess_on_board[y][x] is not None:
-                cl = self.chess_on_board[y][x].r_color()
+            if self.chess_on_board[y_pos][x_pos] is not None:
+                cl = self.chess_on_board[y_pos][x_pos].r_color()
                 if cl == self.color:
-                    fl = self.chess_on_board[y][x].move(al)
+                    fl = self.chess_on_board[y_pos][x_pos].move(al)
             if fl:
                 if self.color == 'Wt':
                     self.color = 'Bl'
@@ -121,7 +103,7 @@ class Pawn(Chess):  # пешка
         return f'Pn{self.color}'
 
     def move(self, al):
-        x2, y2 = int(al[0]), int(al[1])
+        x2, y2 = al[0], al[1]
         c = 0
 
         if self.chess_on_board[y2][x2] is not None:
@@ -131,9 +113,9 @@ class Pawn(Chess):  # пешка
 
         if self.color == 'Wt':
             if self.y - 1 <= y2 <= self.y:
-                if y2 == self.y and x2 != self.x and self.x - 1 <= x2 <= self.x + 1:
+                if y2 == self.y and x2 != self.x and self.x - 2 < x2 < self.x + 2:
                     c += 1
-                elif self.x - 1 <= x2 <= self.x + 1:
+                elif self.x - 1 < x2 < self.x + 2:
                     c += 1
         else:
             if self.y <= y2 <= self.y + 1:
@@ -156,7 +138,7 @@ class Toat(Chess):  # тоат
         return f'Tt{self.color}'
 
     def move(self, al):
-        x2, y2, x3, y3 = int(al[0]), int(al[1]), int(al[2]), int(al[3])
+        x2, y2, x3, y3 = al[0], al[1], al[2], al[3]
         c = 0
 
         if self.chess_on_board[y2][x2] is not None:
@@ -195,7 +177,7 @@ class Warrior(Chess):  # воин
         return f'Wa{self.color}'
 
     def move(self, al):
-        x2, y2, x3, y3 = int(al[0]), int(al[1]), int(al[2]), int(al[3])
+        x2, y2, x3, y3 = al[0], al[1], al[2], al[3]
         c = 0
 
         if self.chess_on_board[y2][x2] is not None:
@@ -229,7 +211,7 @@ class PodDwar(Chess):  # под-двар
         return f'Pd{self.color}'
 
     def move(self, al):
-        x2, y2, x3, y3 = int(al[0]), int(al[1]), int(al[2]), int(al[3])
+        x2, y2, x3, y3 = al[0], al[1], al[2], al[3]
         c = 0
 
         if self.chess_on_board[y2][x2] is not None:
@@ -259,8 +241,7 @@ class Dwar(Chess):  # двар
         return f'Dw{self.color}'
 
     def move(self, al):
-        x2, y2, x3, y3, x4, y4 = int(al[0]), int(al[1]), int(al[2]), int(al[3]), int(al[4]), int(
-            al[5])
+        x2, y2, x3, y3, x4, y4 = al[0], al[1], al[2], al[3], al[4], al[5]
         c = 0
 
         if self.chess_on_board[y2][x2] is not None:
@@ -301,8 +282,7 @@ class Pilot(Chess):  # лётчик
         return f'Pl{self.color}'
 
     def move(self, al):
-        x2, y2, x3, y3, x4, y4 = int(al[0]), int(al[1]), int(al[2]), int(al[3]), int(al[4]), int(
-            al[5])
+        x2, y2, x3, y3, x4, y4 = al[0], al[1], al[2], al[3], al[4], al[5]
         c = 0
 
         if self.chess_on_board[y4][x4] is not None:
@@ -333,8 +313,7 @@ class Leader(Chess):  # вождь
         return f'Ld{self.color}'
 
     def move(self, al):
-        x2, y2, x3, y3, x4, y4 = int(al[0]), int(al[1]), int(al[2]), int(al[3]), int(al[4]), int(
-            al[5])
+        x2, y2, x3, y3, x4, y4 = al[0], al[1], al[2], al[3], al[4], al[5]
         c = 0
 
         if self.chess_on_board[y2][x2] is not None:
@@ -370,7 +349,7 @@ class Princess(Chess):  # принцесса
 
     def move(self, al):
         if len(al) > 2:
-            x2, y2, x3, y3, x4, y4 = int(al[0]), int(al[1]), int(al[2]), int(al[3]), int(al[4]), int(al[5])
+            x2, y2, x3, y3, x4, y4 = al[0], al[1], al[2], al[3], al[4], al[5]
             c = 0
 
             if self.chess_on_board[y4][x4] is not None:
@@ -423,7 +402,7 @@ def start(message):
 
 
 @bot.message_handler(commands=['draw_board'])
-def game_pc(message):
+def draw_board(message):
     markup = types.ReplyKeyboardMarkup()
     markup.row(types.KeyboardButton('/command_help'))
     s = game.draw_pc()
@@ -497,28 +476,34 @@ def roots(message):
     )
 
 
-# @bot.message_handler(commands=['move'])
-# def move(message):
-#     args = context.args
-#     try:
-#         x1, y1, al = args[0], args[1], args[2:]  # в списке сами значения сдвинуты на +1
-#         fl = game.move_figure(x1, y1, al)
-#         if fl:
-#             res = 'Передвигаем фигуру'
-#         else:
-#             res = 'Фигура не выбрана / выбрана фигура другого цвета / фигура не способна на такое перемещение /' \
-#                   ' фигура встаёт на союзника) / неверный тип данных\n' \
-#                   'Выполните команду ещё раз, но уже с корректными значениями'
-#         update.message.reply_text(res)
-#         game_pc(update)
-#     except (IndexError, ValueError):
-#         update.message.reply_text('Вы ввели недостаточное количество пар для фигуры / пара не полноценная / вы ничего '
-#                                   'не ввели.\n'
-#                                   'Посмотрите правила для полного понимания движений фигур',
-#                                   reply_markup=ReplyKeyboardMarkup([['/rules', '/help']], one_time_keyboard=True,
-#                                                                    resize_keyboard=True))
-#         update.message.reply_text('Использование: /move <х-координата> <у-координата> + '
-#                                   'ещё 1-3 пары координат в таком стиле>')
+@bot.message_handler(commands=['move'])
+def move(message):
+    args = [int(i) - 1 for i in message.text.split()[1:]]
+    try:
+        x1, y1, al = args[0], args[1], args[2:]  # в списке сами значения сдвинуты на +1
+        fl = game.move_figure(x1, y1, al)
+        if fl:
+            res = 'Передвигаем фигуру'
+        else:
+            res = 'Фигура не выбрана / выбрана фигура другого цвета / фигура не способна на такое перемещение /' \
+                  ' фигура встаёт на союзника) / неверный тип данных\n' \
+                  'Выполните команду ещё раз, но уже с корректными значениями'
+        bot.send_message(message.chat.id, res)
+        draw_board(message)
+    except (IndexError, ValueError):
+        markup = types.ReplyKeyboardMarkup()
+        markup.row(types.KeyboardButton('/rules'))
+        markup.row(types.KeyboardButton('/command_help'))
+        bot.send_message(
+            message.chat.id,
+            'Вы ввели недостаточное количество пар для фигуры / пара не полноценная / вы ничего не ввели.\n'
+            'Посмотрите правила для полного понимания движений фигур'
+        )
+        bot.send_message(
+            message.chat.id,
+            'Использование: /move <х-координата> <у-координата> + ещё 1-3 пары координат в таком стиле>',
+            parse_mode=markup
+        )
 
 
 @bot.message_handler(commands=['command_help'])
@@ -530,11 +515,12 @@ def command_help(message):
         '/start - помогает начать игру',
         '/move - передвижение фигур. При вводе неверных данных говорит об этом',
         '/rules - правила самой игры с примерами видов',
+        '/draw_board - рисует доску. На ней отображаются все фигуры'
         '/end - команда сделана для начала новой игры самостоятельно',
-        '/command_help - вызывает этот список, на случай чего'
+        '/command_help - вызывает этот список, на случай чего',
+        '/info - выдаёт краткую информацию, что здесь происходит'
     ]
-    cmd1 = types.KeyboardButton('/start')
-    markup.row(cmd1)
+    markup.row(types.KeyboardButton('/start'))
     bot.send_message(message.chat.id, '\n'.join(help_list), reply_markup=markup)
 
 
