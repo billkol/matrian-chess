@@ -456,7 +456,7 @@ def end_game(message):
 def information(message):
     markup = types.ReplyKeyboardMarkup()
     markup.row(types.KeyboardButton('/start'))
-    markup.row(types.KeyboardButton('/roots'))
+    markup.row(types.KeyboardButton('/rules'))
     markup.row(types.KeyboardButton('/command_help'))
     bot.send_message(
         message.chat.id,
@@ -466,7 +466,7 @@ def information(message):
     )
 
 
-@bot.message_handler(commands=['roots'])
+@bot.message_handler(commands=['rules'])
 def roots(message):
     markup = types.ReplyKeyboardMarkup()
     markup.row(types.KeyboardButton('/start'))
@@ -515,7 +515,7 @@ def roots(message):
 #         update.message.reply_text('Вы ввели недостаточное количество пар для фигуры / пара не полноценная / вы ничего '
 #                                   'не ввели.\n'
 #                                   'Посмотрите правила для полного понимания движений фигур',
-#                                   reply_markup=ReplyKeyboardMarkup([['/roots', '/help']], one_time_keyboard=True,
+#                                   reply_markup=ReplyKeyboardMarkup([['/rules', '/help']], one_time_keyboard=True,
 #                                                                    resize_keyboard=True))
 #         update.message.reply_text('Использование: /move <х-координата> <у-координата> + '
 #                                   'ещё 1-3 пары координат в таком стиле>')
@@ -529,7 +529,7 @@ def command_help(message):
         '/help - команда даёт некоторую информацию о том, что тут происходит',
         '/start - помогает начать игру',
         '/move - передвижение фигур. При вводе неверных данных говорит об этом',
-        '/roots - правила самой игры с примерами видов',
+        '/rules - правила самой игры с примерами видов',
         '/end - команда сделана для начала новой игры самостоятельно',
         '/command_help - вызывает этот список, на случай чего'
     ]
