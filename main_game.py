@@ -112,16 +112,16 @@ class Pawn(Chess):  # пешка
                 return False
 
         if self.color == 'Wt':
-            if self.y - 1 <= y2 <= self.y:
-                if y2 == self.y and x2 != self.x and self.x - 2 < x2 < self.x + 2:
+            if self.y - 1 == y2 or y2 == self.y:
+                if y2 == self.y and x2 != self.x and (self.x - 1 == x2 or x2 == self.x + 1):
                     c += 1
-                elif self.x - 1 < x2 < self.x + 2:
+                elif self.x - 1 <= x2 <= self.x + 1:
                     c += 1
         else:
-            if self.y <= y2 <= self.y + 1:
-                if self.x - 2 < x2 < self.x + 2 and self.y == y2 and x2 != self.x:
+            if self.y == y2 or y2 == self.y + 1:
+                if (self.x - 1 == x2 or x2 == self.x + 1) and self.y == y2 and x2 != self.x:
                     c += 1
-                elif self.x - 2 < x2 < self.x + 2:
+                elif self.x - 1 <= x2 <= self.x + 1:
                     c += 1
         if c == 1:
             self.chess_on_board[self.y][self.x] = None
@@ -478,9 +478,9 @@ def roots(message):
 
 @bot.message_handler(commands=['move'])
 def move(message):
-    args = [int(i) - 1 for i in message.text.split()[1:]]
     try:
-        x1, y1, al = args[0], args[1], args[2:]  # в списке сами значения сдвинуты на +1
+        args = [int(i) - 1 for i in message.text.split()[1:]]
+        x1, y1, al = args[0], args[1], args[2:]
         fl = game.move_figure(x1, y1, al)
         if fl:
             res = 'Передвигаем фигуру'
@@ -515,7 +515,7 @@ def command_help(message):
         '/start - помогает начать игру',
         '/move - передвижение фигур. При вводе неверных данных говорит об этом',
         '/rules - правила самой игры с примерами видов',
-        '/draw_board - рисует доску. На ней отображаются все фигуры'
+        '/draw_board - рисует доску. На ней отображаются все фигуры',
         '/end - команда сделана для начала новой игры самостоятельно',
         '/command_help - вызывает этот список, на случай чего',
         '/info - выдаёт краткую информацию, что здесь происходит'
