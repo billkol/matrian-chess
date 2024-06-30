@@ -7,6 +7,14 @@ bot = telebot.TeleBot('5316221762:AAFjaEjaQa7Tu6HUuNoaN9cPR7Xd8c1zZ00')
 
 @bot.message_handler(commands=['start'])
 def start(message):
+    bot.send_message(
+        message.chat.id,
+        'Нажми на /main.'
+    )
+
+
+@bot.message_handler(commands=['main'])
+def main(message):
     markup = types.ReplyKeyboardMarkup()
     markup.row(types.KeyboardButton('/draw_board'))
     markup.row(types.KeyboardButton('/command_help'))
@@ -143,7 +151,8 @@ def command_help(message):
         '/draw_board - рисует доску. На ней отображаются все фигуры',
         '/end - команда сделана для начала новой игры самостоятельно',
         '/command_help - вызывает этот список, на случай чего',
-        '/info - выдаёт краткую информацию, что здесь происходит'
+        '/info - выдаёт краткую информацию, что здесь происходит',
+        '/rooms - показывает информацию, в какие комнаты доступны для игры и сколько.'
     ]
     markup.row(types.KeyboardButton('/start'))
     bot.send_message(message.chat.id, '\n'.join(help_list), reply_markup=markup)

@@ -384,6 +384,7 @@ class Princess(Chess):  # принцесса
 
                 self.chess_on_board[y4][x4] = self.chess_on_board[self.y][self.x]
                 self.chess_on_board[self.y][self.x] = None
+                self.x, self.y = x4, y4
 
                 return True
             return False
