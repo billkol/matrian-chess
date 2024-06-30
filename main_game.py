@@ -18,7 +18,7 @@ class Game:
                                   Toat('Bl', 9, 1)]
 
         self.chess_on_board[0] = [Warrior('Bl', 0, 0), PodDwar('Bl', 1, 0), Dwar('Bl', 2, 0),
-                                  Pilot('Bl', 3, 0), Princess('Bl', 4, 0), Leader('Bl', 5, 0),
+                                  Pilot('Bl', 3, 0), Princess('Bl', 4, 0, 1), Leader('Bl', 5, 0),
                                   Pilot('Bl', 6, 0), Dwar('Bl', 7, 0), PodDwar('Bl', 8, 0),
                                   Warrior('Bl', 9, 0)]
 
@@ -28,7 +28,7 @@ class Game:
                                   Toat('Wt', 9, 8)]
 
         self.chess_on_board[9] = [Warrior('Wt', 0, 9), PodDwar('Wt', 1, 9), Dwar('Wt', 2, 9),
-                                  Pilot('Wt', 3, 9), Leader('Wt', 4, 9), Princess('Wt', 5, 9),
+                                  Pilot('Wt', 3, 9), Leader('Wt', 4, 9), Princess('Wt', 5, 9, 1),
                                   Pilot('Wt', 6, 9), Dwar('Wt', 7, 9), PodDwar('Wt', 8, 9),
                                   Warrior('Wt', 9, 9)]
         self.color = 'Wt'
@@ -83,12 +83,12 @@ class Game:
 
 
 class Chess:  # сами фигуры
-    def __init__(self, color, x, y):
+    def __init__(self, color, x, y, run=0):
         self.chess_on_board = []
         self.color = color
         self.x = x
         self.y = y
-        self.run_counter = 1
+        self.run_counter = run
 
     def r_color(self):
         return self.color
@@ -375,7 +375,7 @@ class Princess(Chess):  # принцесса
 
         elif len(al) == 2:
             if self.run_counter == 1:
-                x4, y4 = int(al[2]), int(al[3])
+                x4, y4 = int(al[0]), int(al[1])
 
                 if self.chess_on_board[y4][x4] is not None:
                     return False
