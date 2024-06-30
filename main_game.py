@@ -367,7 +367,7 @@ class Princess(Chess):  # принцесса
 
             if c == 3:
                 self.chess_on_board[self.y][self.x] = None
-                self.chess_on_board[y4][x4] = Princess(self.color, x4, y4)
+                self.chess_on_board[y4][x4] = Princess(self.color, x4, y4, 1)
 
             if c == 3:
                 return True
