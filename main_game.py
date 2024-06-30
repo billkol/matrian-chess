@@ -123,8 +123,9 @@ class Pawn(Chess):  # пешка
                 elif self.x - 1 <= x2 <= self.x + 1:
                     c += 1
         if c == 1:
+            self.chess_on_board[y2][x2] = self.chess_on_board[self.y][self.x]
             self.chess_on_board[self.y][self.x] = None
-            self.chess_on_board[y2][x2] = Pawn(self.color, x2, y2)
+            self.x, self.y = x2, y2
 
         if c == 1:
             return True
@@ -163,8 +164,9 @@ class Toat(Chess):  # тоат
                 c += 2
 
         if c == 3:
+            self.chess_on_board[y3][x3] = self.chess_on_board[self.y][self.x]
             self.chess_on_board[self.y][self.x] = None
-            self.chess_on_board[y3][x3] = Toat(self.color, x3, y3)
+            self.x, self.y = x3, y3
 
         if c == 3:
             return True
@@ -197,8 +199,9 @@ class Warrior(Chess):  # воин
                 c += 1
 
         if c == 2:
+            self.chess_on_board[y3][x3] = self.chess_on_board[self.y][self.x]
             self.chess_on_board[self.y][self.x] = None
-            self.chess_on_board[y3][x3] = Warrior(self.color, x3, y3)
+            self.x, self.y = x3, y3
 
         if c == 2:
             return True
@@ -227,8 +230,9 @@ class PodDwar(Chess):  # под-двар
                 c += 1
 
         if c == 2:
+            self.chess_on_board[y3][x3] = self.chess_on_board[self.y][self.x]
             self.chess_on_board[self.y][self.x] = None
-            self.chess_on_board[y3][x3] = PodDwar(self.color, x3, y3)
+            self.x, self.y = x3, y3
 
         if c == 2:
             return True
@@ -268,8 +272,9 @@ class Dwar(Chess):  # двар
                 c += 1
 
         if c == 3:
+            self.chess_on_board[y4][x4] = self.chess_on_board[self.y][self.x]
             self.chess_on_board[self.y][self.x] = None
-            self.chess_on_board[y4][x4] = Dwar(self.color, x4, y4)
+            self.x, self.y = x4, y4
 
         if c == 3:
             return True
@@ -299,8 +304,9 @@ class Pilot(Chess):  # лётчик
                 c += 1
 
         if c == 3:
+            self.chess_on_board[y4][x4] = self.chess_on_board[self.y][self.x]
             self.chess_on_board[self.y][self.x] = None
-            self.chess_on_board[y4][x4] = Pilot(self.color, x4, y4)
+            self.x, self.y = x4, y4
 
         if c == 3:
             return True
@@ -334,8 +340,9 @@ class Leader(Chess):  # вождь
                 c += 1
 
         if c == 3:
+            self.chess_on_board[y4][x4] = self.chess_on_board[self.y][self.x]
             self.chess_on_board[self.y][self.x] = None
-            self.chess_on_board[y4][x4] = Leader(self.color, x4, y4)
+            self.x, self.y = x4, y4
 
         if c == 3:
             return True
@@ -366,8 +373,9 @@ class Princess(Chess):  # принцесса
                     c += 1
 
             if c == 3:
+                self.chess_on_board[y4][x4] = self.chess_on_board[self.y][self.x]
                 self.chess_on_board[self.y][self.x] = None
-                self.chess_on_board[y4][x4] = Princess(self.color, x4, y4, self.run_counter)
+                self.x, self.y = x4, y4
 
             if c == 3:
                 return True
@@ -380,8 +388,8 @@ class Princess(Chess):  # принцесса
                 if self.chess_on_board[y4][x4] is not None:
                     return False
 
+                self.chess_on_board[y4][x4] = self.chess_on_board[self.y][self.x]
                 self.chess_on_board[self.y][self.x] = None
-                self.chess_on_board[y4][x4] = Princess(self.color, x4, y4)
 
                 return True
             return False
@@ -454,14 +462,14 @@ def roots(message):
         'Марсианские шахматы\n'
         'В этих шахматах фигуры ходят совсем не стандартным образом, а так же в один ход игрока, '
         'каждая определённая фигура должна сходить на строго определённое количество шагов/клеток.\n'
-        'Расстановка фигур тоже жёсткая: Тоат, Пешка * 8, Тоат; Воин, Под-Двар, Двар, Лётчик, Вождь, '
+        'Расстановка фигур тоже жёсткая:\nТоат, Пешка * 8, Тоат\nВоин, Под-Двар, Двар, Лётчик, Вождь, '
         'Принцесса, Лётчик, Двар, Под-Двар, Воин.\nСоответственно и само поле является доской 10*10.\n'
         '\nКак ходят фигуры?\nПервыми ходят белые.\nПешка / Pn.\n'
         'Пешка может ходить на соседние клетки в 5-ти сторонах: вперёд, в бока и по диагонали вперёд.\n'
-        'Тоат / Tt.\nТоат уже имеет комбинаторное движение, т.е. имеет уже несколько шагов за 1 ход игрока.'
-        ' Он должен ходить на 1 соседнюю клетку по диагонали и на 1 соседнюю по горизонталям/вертикалям. '
+        'Тоат / Tt.\nТоат уже имеет комбинаторное движение, т.е. имеет уже несколько шагов за 1 ход игрока. '
+        'Он должен ходить на 1 соседнюю клетку по диагонали и на 1 соседнюю по горизонталям/вертикалям. '
         'Ходить в такой последовательности не обязательно, но обязательно знать, что он свои шаги чередует, '
-        'и за 1 ход игрока не может перейти более или менее 2 клеток.\nВоин / Wa.\n'
+        'и за 1 ход игрока не может перейти больше или меньше 2 клеток.\nВоин / Wa.\n'
         'Воин ходит только по горизонталям/вертикалям, и шагает он 2 раза.\nПод-Двар / Pd.\n'
         'Под-Двар ходит по 2-ум соседним клеткам по диагонали.\nДвар / Dw.\nДвар ходит по 3 соседним '
         'клеткам по горизонталям/вертикалям.\nЛётчик / Pl.\nЛётчик, в отличии от остальных фигур '
@@ -470,7 +478,16 @@ def roots(message):
         'Та фигура, которая не имеет границ по направлению движения, но ограничена в шагах, их всего 3.\n'
         'Принцесса / Pr.\nФигура, что считает в себе ходы Вождя и возможность перепрыгивать через другие фигуры. '
         'В отличии от всех остальных фигур, её нужно оберегать от съедения противником.\n'
-        '\nФигура может поедать вражескую только на последнем своём шаге.\n',
+        'Один раз за всю партию может совершить побег. Побег может произойти в любой момент, главное, чтобы на месте,'
+        ' куда хотят сбежать, не было никого. А для того, чтобы сбежать, достаточно написать координаты, куда следует'
+        ' переместить фигуру\n'
+        '\nА чтобы вообще перемещать фигуры используйте команду /move. После самой команды, в этом же сообщении, '
+        'напишите последовательно координаты (x и y, через пробел) самой фигуры, которую хотите передвигать, и '
+        'последовательность координат других клеток, куда потом будет ступать фигура, в том количесвте, сколько шагов '
+        'за ваш ход она делает. Как уже было написано выше, Принцесса может постоянно ходить на 3 клетки или один раз '
+        'сбежать на любую другую свободную клетку, напишите только координаты правильно.\n\n'
+        'А, ну и последнее, не менее важное правило: фигура может поедать вражескую только на последнем своём шаге.\n'
+        '\nНа этом вроде бы всё. Удачи в играх!',
         reply_markup=markup
     )
 
