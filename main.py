@@ -2,7 +2,7 @@ import telebot
 from telebot import types
 from logic_game_and_chess import Game
 
-API_cod = open('data/appdatainfo_2.txt', 'r', encoding='utf-8')[0]
+API_cod = open('data/appdatainfo.txt', 'r', encoding='utf-8')[0]
 bot = telebot.TeleBot(API_cod)
 
 
