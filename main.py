@@ -2,7 +2,8 @@ import telebot
 from telebot import types
 from logic_game_and_chess import Game
 
-bot = telebot.TeleBot('5316221762:AAFjaEjaQa7Tu6HUuNoaN9cPR7Xd8c1zZ00')
+API_cod = open('appdatainfo.txt', 'r', encoding='utf-8')[0]
+bot = telebot.TeleBot(API_cod)
 
 
 @bot.message_handler(commands=['start'])
@@ -158,7 +159,16 @@ def command_help(message):
     bot.send_message(message.chat.id, '\n'.join(help_list), reply_markup=markup)
 
 
-rooms = {}
+@bot.message_handler()
+def random(message):
+    user_text = message.text
+    bot.send_message(
+        message.chat.id,
+        user_text
+    )
 
-game = Game()
-bot.polling(none_stop=True)
+
+if __name__ == '__main__':
+    rooms = {}
+    game = Game()
+    bot.polling(none_stop=True)
