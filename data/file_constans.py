@@ -1,2 +1,2 @@
 API_cod = '5316221762:AAFjaEjaQa7Tu6HUuNoaN9cPR7Xd8c1zZ00'
-Api_Cod = '534'
+Api_Cod = '535'
