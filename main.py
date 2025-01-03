@@ -1,8 +1,10 @@
 import telebot
 from telebot import types
 from logic_game_and_chess import Game
+from rooms_logic import Rooms
+from data import file_constans
 
-API_cod = open('data/appdatainfo.txt', 'r', encoding='utf-8')[0]
+API_cod = file_constans.API_cod
 bot = telebot.TeleBot(API_cod)
 
 
@@ -45,7 +47,7 @@ def draw_board(message):
 @bot.message_handler(commands=['end'])
 def end_game(message):
     markup = types.ReplyKeyboardMarkup()
-    markup.row(types.KeyboardButton('/start'))
+    markup.row(types.KeyboardButton('/main'))
     markup.row(types.KeyboardButton('/command_help'))
     bot.send_message(message.chat.id, 'RELOAD SYSTEM')
     game.new_game()
@@ -59,7 +61,7 @@ def end_game(message):
 @bot.message_handler(commands=['info'])
 def information(message):
     markup = types.ReplyKeyboardMarkup()
-    markup.row(types.KeyboardButton('/start'))
+    markup.row(types.KeyboardButton('/main'))
     markup.row(types.KeyboardButton('/rules'))
     markup.row(types.KeyboardButton('/command_help'))
     bot.send_message(
@@ -73,7 +75,7 @@ def information(message):
 @bot.message_handler(commands=['rules'])
 def roots(message):
     markup = types.ReplyKeyboardMarkup()
-    markup.row(types.KeyboardButton('/start'))
+    markup.row(types.KeyboardButton('/main'))
     markup.row(types.KeyboardButton('/command_help'))
     bot.send_message(
         message.chat.id,
@@ -146,16 +148,17 @@ def command_help(message):
     help_list = [
         'Тут можно узнать, какая команда за что отвечает, и какие есть вообще (может вы их ещё не видели):',
         '/help - команда даёт некоторую информацию о том, что тут происходит',
-        '/start - помогает начать игру',
+        '/start - выдаёт основную информацию, которая нужна для начала',
+        '/main - ',
         '/move - передвижение фигур. При вводе неверных данных говорит об этом',
         '/rules - правила самой игры с примерами видов',
         '/draw_board - рисует доску. На ней отображаются все фигуры',
         '/end - команда сделана для начала новой игры самостоятельно',
         '/command_help - вызывает этот список, на случай чего',
         '/info - выдаёт краткую информацию, что здесь происходит',
-        '/rooms - показывает информацию, в какие комнаты доступны для игры и сколько.'
+        '/rooms - показывает информацию, в какие комнаты можно зайти.'
     ]
-    markup.row(types.KeyboardButton('/start'))
+    markup.row(types.KeyboardButton('/main'))
     bot.send_message(message.chat.id, '\n'.join(help_list), reply_markup=markup)
 
 
@@ -169,6 +172,6 @@ def random(message):
 
 
 if __name__ == '__main__':
-    rooms = {}
+    rooms = Rooms()
     game = Game()
     bot.polling(none_stop=True)
