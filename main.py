@@ -32,10 +32,10 @@ def main(message):
 def draw_board(message):
     markup = types.ReplyKeyboardMarkup()
     markup.row(types.KeyboardButton('/command_help'))
-    s = game.draw_pc()
-    w = '\n'.join(s)
-    bot.send_message(message.chat.id, w, parse_mode="Markdown")
-    if w.count('Pr') == 1:
+    s: list[str] = game.draw_pc()
+    word: str = '\n'.join(s)
+    bot.send_message(message.chat.id, word, parse_mode="Markdown")
+    if word.count('Pr') == 1:
         game.new_game()
         bot.send_message(
             message.chat.id,
@@ -117,8 +117,8 @@ def move(message):
     try:
         args = [int(i) - 1 for i in message.text.split()[1:]]
         x1, y1, al = args[0], args[1], args[2:]
-        fl = game.move_figure(x1, y1, al)
-        if fl:
+        flag: bool = game.move_figure(x1, y1, al)
+        if flag:
             res = 'Передвигаем фигуру'
         else:
             res = 'Фигура не выбрана / выбрана фигура другого цвета / фигура не способна на такое перемещение /' \

@@ -4,7 +4,7 @@ class Game:
         self.color = 'Wt'
         self.new_game()
 
-    def new_game(self):
+    def new_game(self) -> None:
         self.chess_on_board = [[None] * 10 for _ in range(10)]
 
         self.chess_on_board[1] = [
@@ -62,7 +62,7 @@ class Game:
         self.color = 'Wt'
         self.update()
 
-    def draw_pc(self):
+    def draw_pc(self) -> list[str]:
         s = ["```", "+----+----+----+----+----+----+----+----+----+----+"]
         for q, i in enumerate(self.chess_on_board):
             s1 = []
@@ -82,7 +82,7 @@ class Game:
         s.append(f'Сейчас ход {cl}')
         return s
 
-    def move_figure_helper(self, x_pos, y_pos, al):  # движение фигур по доске
+    def move_figure_helper(self, x_pos: int, y_pos: int, al: list[int]) -> bool:  # движение фигур по доске
         try:
             flag = False
             if self.chess_on_board[y_pos][x_pos] is not None:
@@ -98,12 +98,13 @@ class Game:
         except TypeError:
             return False
 
-    def move_figure(self, x_pos, y_pos, al):
+    def move_figure(self, x_pos: int, y_pos: int, al: list[int]) -> bool:
         flag = self.move_figure_helper(x_pos, y_pos, al)
+        self.chess_on_board = self.chess_on_board[y_pos][x_pos].return_board()
         self.update()
         return flag
 
-    def update(self):
+    def update(self) -> None:
         for y in self.chess_on_board:
             for x in y:
                 if x is not None:
@@ -111,27 +112,27 @@ class Game:
 
 
 class Chess:  # сами фигуры
-    def __init__(self, color, x, y):
+    def __init__(self, color: str, x: int, y: int):
         self.chess_on_board = []
         self.color = color
         self.x = x
         self.y = y
 
-    def r_color(self):
+    def r_color(self) -> str:
         return self.color
 
-    def new_board(self, chess_on_board):
+    def new_board(self, chess_on_board: list[list]) -> None:
         self.chess_on_board = chess_on_board
 
-    def return_board(self):
+    def return_board(self) -> list[list]:
         return self.chess_on_board
 
 
 class Pawn(Chess):  # пешка
-    def look(self):
+    def look(self) -> str:
         return f'Pn{self.color}'
 
-    def move(self, al):
+    def move(self, al: list[int]) -> bool:
         x2, y2 = al[0], al[1]
         c = 0
 
@@ -161,10 +162,10 @@ class Pawn(Chess):  # пешка
 
 
 class Toat(Chess):  # тоат
-    def look(self):
+    def look(self) -> str:
         return f'Tt{self.color}'
 
-    def move(self, al):
+    def move(self, al: list[int]) -> bool:
         x2, y2, x3, y3 = al[0], al[1], al[2], al[3]
         c = 0
 
@@ -199,10 +200,10 @@ class Toat(Chess):  # тоат
 
 
 class Warrior(Chess):  # воин
-    def look(self):
+    def look(self) -> str:
         return f'Wa{self.color}'
 
-    def move(self, al):
+    def move(self, al: list[int]) -> bool:
         x2, y2, x3, y3 = al[0], al[1], al[2], al[3]
         c = 0
 
@@ -232,10 +233,10 @@ class Warrior(Chess):  # воин
 
 
 class PodDwar(Chess):  # под-двар
-    def look(self):
+    def look(self) -> str:
         return f'Pd{self.color}'
 
-    def move(self, al):
+    def move(self, al: list[int]) -> bool:
         x2, y2, x3, y3 = al[0], al[1], al[2], al[3]
         c = 0
 
@@ -261,10 +262,10 @@ class PodDwar(Chess):  # под-двар
 
 
 class Dwar(Chess):  # двар
-    def look(self):
+    def look(self) -> str:
         return f'Dw{self.color}'
 
-    def move(self, al):
+    def move(self, al: list[int]) -> bool:
         x2, y2, x3, y3, x4, y4 = al[0], al[1], al[2], al[3], al[4], al[5]
         c = 0
 
@@ -301,10 +302,10 @@ class Dwar(Chess):  # двар
 
 
 class Pilot(Chess):  # лётчик
-    def look(self):
+    def look(self) -> str:
         return f'Pl{self.color}'
 
-    def move(self, al):
+    def move(self, al: list[int]) -> bool:
         x2, y2, x3, y3, x4, y4 = al[0], al[1], al[2], al[3], al[4], al[5]
         c = 0
 
@@ -331,10 +332,10 @@ class Pilot(Chess):  # лётчик
 
 
 class Leader(Chess):  # вождь
-    def look(self):
+    def look(self) -> str:
         return f'Ld{self.color}'
 
-    def move(self, al):
+    def move(self, al: list[int]) -> bool:
         x2, y2, x3, y3, x4, y4 = al[0], al[1], al[2], al[3], al[4], al[5]
         c = 0
 
@@ -369,10 +370,10 @@ class Princess(Chess):  # принцесса
         super().__init__(color, x, y)
         self.run_counter = run
 
-    def look(self):
+    def look(self) -> str:
         return f'Pr{self.color}'
 
-    def move(self, al):
+    def move(self, al: list[int]) -> bool:
         x2, y2, x3, y3, x4, y4 = al[0], al[1], al[2], al[3], al[4], al[5]
         c = 0
 
